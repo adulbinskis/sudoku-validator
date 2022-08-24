@@ -10,26 +10,25 @@ class Validator {
   }
 
   isValidY(suCleaned){
-    let rowIter = 0 //row iterator
-    for(let l = 0;l<9;l++){// to iterate throo rows
-      let getRow = suCleaned.substring(0+rowIter, 9+rowIter) //row
-      for(let i=0;i<9;i++){ //to iterate thoo row characters
-        let rowChar = getRow.charAt(i) //row char
-        let duble = 0 //find 
+    let rowIter = 0
+    for(let l = 0;l<9;l++){
+      let getRow = suCleaned.substring(0+rowIter, 9+rowIter) 
+      for(let i=0;i<9;i++){ 
+        let rowChar = getRow.charAt(i) 
+        let duble = 0
         let column = ''
         let colIter = 0
-        for(let k=0;k<9;k++){ //column stack
+        for(let k=0;k<9;k++){
           column += suCleaned.charAt(0+i+colIter)
           colIter=colIter+9
         }
-        for(let j=0;j<9;j++){ //check for duplicates
+        for(let j=0;j<9;j++){ 
           if(rowChar==0 && column.charAt(j)==0){
             break
           }
           if(rowChar == column.charAt(j)){
             duble = duble + 1
             if(duble == 2){
-              // console.log('Sudoku is invalid.')
               return false
             }
           }  
@@ -61,7 +60,6 @@ class Validator {
           if(getRow.charAt(j) == colChar){
             duble = duble + 1
             if(duble == 2){
-              // console.log('Sudoku is invalid.')
               return false
             }
           }  
@@ -115,7 +113,6 @@ class Validator {
         return value !== '0';
       });
       if (filtered.length !== 0) {
-        // console.log("grid dupe!")
         return false
       }
     }
@@ -125,22 +122,16 @@ class Validator {
   isComplete(suCleaned){
     for (var i = 0; i < suCleaned.length; i++) {
         if(suCleaned.charAt(i)=='0'){
-          // console.log("Incomplete!")
           return false
         }
     }
     return true
   }
 
-
-
-
+  
   validate(sudoku) {
     // Your code here 
-    const path1 = path.join(process.cwd(), sudoku) //path with back forward slash
-    var path2 = path1.replace(/\\/g, "/");//path with forwardd forward slash
-
-    const su = fs.readFileSync(path2,'utf8') // if you type 'C:/Users/dota2/Desktop/Project/sudoku-validator-node/test/fixtures/valid_complete.sudoku' insted of path test will pass
+    const su = sudoku 
     const suCleaned = su.replace(/\D+/g, "")
     let isValidY = true
     let isValidX = true
@@ -152,10 +143,6 @@ class Validator {
     isValidSubGroup = this.isValidSubGroup(suCleaned)
     isComplete = this.isComplete(suCleaned)
 
-    // console.log('isValidX        '+isValidX)
-    // console.log('isValidSubGroup '+isValidSubGroup)
-    // console.log('isComplete      '+isComplete)
-
     if(isValidY && isValidX && isValidSubGroup && isComplete){
       return 'Sudoku is valid.'
     }
@@ -165,12 +152,8 @@ class Validator {
     if(!isValidY || !isValidX || !isValidSubGroup){
       return 'Sudoku is invalid.'
     }
-
-
-    
   }
 }
-    // node bin/validate
-    // node bin/validate test\fixtures\invalid_due_to_column_dupe.sudoku
+
 
 module.exports = Validator
